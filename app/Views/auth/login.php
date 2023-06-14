@@ -8,6 +8,14 @@
             <div class="login-content">
               <div class="login-logo">
                 <h1>Login</h1>
+                <?php if (!empty(session()->getFlashdata('sukses'))): ?>
+                  <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                      <?=session()->getFlashdata('sukses');?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                <?php endif;?>
               </div>
               <div class="login-form">
                 <form action="" method="post">
