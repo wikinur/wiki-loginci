@@ -16,16 +16,25 @@
                       </button>
                   </div>
                 <?php endif;?>
+                <?php if (!empty(session()->getFlashdata('error'))): ?>
+                    ]<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+									    <?=session()->getFlashdata('error');?>
+									    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										    <span aria-hidden="true">&times;</span>
+									    </button>
+								    </div>
+                <?php endif;?>
               </div>
               <div class="login-form">
-                <form action="" method="post">
+                <form action="<?=base_url('/login');?>" method="post">
+                <?=csrf_field();?>
                   <div class="form-group">
-                    <label>Email Address</label>
+                    <label>Username</label>
                     <input
                       class="au-input au-input--full"
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type="text"
+                      name="username"
+                      placeholder="username"
                     />
                   </div>
                   <div class="form-group">

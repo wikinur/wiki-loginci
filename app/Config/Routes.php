@@ -29,9 +29,18 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+// Page Login
 $routes->get('/', 'AuthController::index');
+
+// Proses Login & Register
 $routes->get('/register', 'AuthController::register');
 $routes->post('/prosesRegister', 'AuthProsesController::prosesRegister');
+$routes->post('/login', 'AuthProsesController::ProsesLogin');
+$routes->get('/logout', 'AuthProsesController::logout');
+
+// Page Admin
+$routes->get('/admin', 'AdminController::index', ['filter' => 'AuthFilter']);
 
 /*
  * --------------------------------------------------------------------

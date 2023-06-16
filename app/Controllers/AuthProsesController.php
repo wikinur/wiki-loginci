@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\AuthModel;
 use App\Models\UserModel;
 
 class AuthProsesController extends BaseController
@@ -68,6 +69,40 @@ class AuthProsesController extends BaseController
         $model = new UserModel();
         $model->insert($data);
         session()->setFlashdata('sukses', 'Register Berhasil');
+        return redirect()->to('/');
+    }
+
+    public function ProsesLogin()
+    {
+        $model = new AuthModel();
+        $table = 'users';
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+        $row = $model->get_data_login($username, $table);
+        if ($row == null) {
+            session()->setFlashdata('error', 'username anda salah');
+            return redirect()->to('/');
+        }
+
+        if (password_verify($password, $row->password)) {
+            $data = array(
+                'log' => true,
+                'name' => $row->name,
+                'username' => $row->username,
+                // 'level' => $row->level,
+            );
+            session()->set($data);
+            session()->setFlashdata('sukses', 'login Berhasil');
+            return redirect()->to('/admin');
+        }
+        session()->setFlashdata('error', 'Password salah');
+        return redirect()->to('/');
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
         return redirect()->to('/');
     }
 }
